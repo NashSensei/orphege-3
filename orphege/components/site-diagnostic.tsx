@@ -70,7 +70,7 @@ export function SiteDiagnostic() {
 
           <p className="mt-6 border-l-2 border-border pl-4 text-sm leading-relaxed text-muted-foreground">
             <span className="font-medium text-foreground">Note :</span> hors plans
-            détaillés et chiffrage — la suite de la mission sera payante.
+            détaillés et chiffrage la suite de la mission sera payante.
           </p>
         </div>
 
