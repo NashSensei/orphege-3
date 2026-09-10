@@ -28,7 +28,7 @@ export function SiteDiagnostic() {
             Votre premier diagnostic
           </p>
           <h2 className="font-serif text-3xl font-medium text-balance text-foreground sm:text-4xl">
-            Votre premier diagnostic —{' '}
+            Votre premier diagnostic{' '}
             <span className="text-primary">offert et sans engagement</span>
           </h2>
           <p className="mt-6 max-w-md leading-relaxed text-muted-foreground">
