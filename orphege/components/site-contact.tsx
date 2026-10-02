@@ -19,10 +19,35 @@ const contactInfo = [
 
 export function SiteContact() {
   const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSent(true)
+    setLoading(true)
+    setError(null)
+
+    try {
+      const formData = new FormData(e.currentTarget)
+      const data = Object.fromEntries(formData)
+
+      const response = await fetch('/api/send-mail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+
+      if (response.ok) {
+        setSent(true)
+      } else {
+        setError('Une erreur est survenue. Veuillez réessayer.')
+      }
+    } catch (err) {
+      setError('Une erreur est survenue. Veuillez réessayer.')
+      console.error('Error:', err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -167,12 +192,19 @@ export function SiteContact() {
                 />
               </div>
 
+              {error && (
+                <div className="rounded-md bg-red-50 p-3 text-sm text-red-800">
+                  {error}
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="group mt-2 inline-flex items-center justify-center gap-3 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-primary-foreground transition-transform hover:-translate-y-0.5"
+                disabled={loading}
+                className="group mt-2 inline-flex items-center justify-center gap-3 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold uppercase tracking-widest text-primary-foreground transition-transform hover:-translate-y-0.5 disabled:opacity-50"
               >
-                Envoyer
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                {loading ? 'Envoi...' : 'Envoyer'}
+                {!loading && <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />}
               </button>
             </div>
           </form>
