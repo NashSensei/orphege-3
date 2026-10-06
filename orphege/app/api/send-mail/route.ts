@@ -8,8 +8,8 @@ export async function POST(request: Request) {
     const { name, email, projectType, location, budget, message } = body
 
     // Email au client (auto-reply)
-    const autoReplyResponse = await resend.emails.send({
-      from: 'noreply@resend.dev',
+    await resend.emails.send({
+      from: 'contact@orphege.fr',
       to: email,
       subject: 'Merci de votre demande - Orphège',
       html: `
@@ -19,12 +19,11 @@ export async function POST(request: Request) {
         <p>Cordialement,<br/>L'équipe Orphège</p>
       `,
     })
-    console.log('Auto-reply response:', autoReplyResponse)
 
     // Email à Adem (notification)
-    const notificationResponse = await resend.emails.send({
-      from: 'noreply@resend.dev',
-      to: 'nashman360m@gmail.com',
+    await resend.emails.send({
+      from: 'contact@orphege.fr',
+      to: 'contact@orphege.fr',
       subject: `Nouvelle demande de contact : ${name}`,
       html: `
         <h2>Nouvelle demande de contact</h2>
@@ -37,7 +36,6 @@ export async function POST(request: Request) {
         <p>${message}</p>
       `,
     })
-    console.log('Notification response:', notificationResponse)
 
     return Response.json({ success: true })
   } catch (error) {
