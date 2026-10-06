@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     // Email à Adem (notification)
     await resend.emails.send({
       from: 'contact@orphege.fr',
-      to: 'contact@orphege.fr',
+      to: 'adem.guner@orphege.fr',
       subject: `Nouvelle demande de contact : ${name}`,
       html: `
         <h2>Nouvelle demande de contact</h2>
